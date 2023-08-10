@@ -5,12 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>音声のストリーミング再生</title>
     <script>
+        // ページのコンテンツが読み込まれた後に実行されるイベントリスナー
         document.addEventListener('DOMContentLoaded', function() {
+            // すべてのaudio要素を取得
             var audios = document.querySelectorAll('audio');
+            // 各audio要素に対して処理を実行
             audios.forEach(function(audio) {
+                // 再生イベントに対するイベントリスナーを追加
                 audio.addEventListener('play', function() {
+                    // すべてのaudio要素に対して処理を実行
                     audios.forEach(function(otherAudio) {
+                        // 現在再生されているaudio要素以外の場合
                         if (otherAudio !== audio) {
+                            // そのaudio要素を一時停止
                             otherAudio.pause();
                         }
                     });
