@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>音声のストリーミング再生</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var audios = document.querySelectorAll('audio');
+            audios.forEach(function(audio) {
+                audio.addEventListener('play', function() {
+                    audios.forEach(function(otherAudio) {
+                        if (otherAudio !== audio) {
+                            otherAudio.pause();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <audio controls>
