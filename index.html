@@ -1,39 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>音声のストリーミング再生</title>
-    <script>
-        // ページのコンテンツが読み込まれた後に実行されるイベントリスナー
-        document.addEventListener('DOMContentLoaded', function() {
-            // すべてのaudio要素を取得
-            var audios = document.querySelectorAll('audio');
-            // 各audio要素に対して処理を実行
-            audios.forEach(function(audio) {
-                // 再生イベントに対するイベントリスナーを追加
-                audio.addEventListener('play', function() {
-                    // すべてのaudio要素に対して処理を実行
-                    audios.forEach(function(otherAudio) {
-                        // 現在再生されているaudio要素以外の場合
-                        if (otherAudio !== audio) {
-                            // そのaudio要素を一時停止
-                            otherAudio.pause();
-                        }
-                    });
-                });
-            });
-        });
-    </script>
+  <title>Top Page</title>
 </head>
 <body>
-    <audio controls>
-        <source src="example.mp3" type="audio/mpeg">
-        お使いのブラウザは音声タグをサポートしていません。
-    </audio>
-    <audio controls>
-        <source src="example2.mp3" type="audio/mpeg">
-        お使いのブラウザは音声タグをサポートしていません。
-    </audio>
+  <h1>Welcome to the Top Page</h1>
+  <p><a href="/sub/index.html?id=section2">Go to Section 2 of Sub Page</a></p>
 </body>
 </html>
