@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>Top Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h2 { margin-top: 2em; }
+    input { padding: 5px 8px; border-radius: 4px; border: 1px solid #f60; appearance: none; color: #666; font-size: 18px; }
+  </style>
 </head>
 <body>
-  <h1>Welcome to the Top Page</h1>
-  <p><a href="/takaki-web/audiotest/sub/index.html?id=section2">Go to Section 2 of Sub Page</a></p>
+  <h1>TimePicker あれこれ</h1>
+​
+  <h2>input type=time + datalist</h2>
+  <select class="timepicker"></select>
+​
+  <p>普通のプルダウンだと、直接入力ができない</p>
+​
+  <script>
+    const timePicker = initTimePicker('.timepicker', {
+      step: 5,
+      minHour: 9,
+      maxHour: 18
+    });
+​
+    /**
+     * ◆options
+     * step: ステップ数（default: 5）。設定した分刻みの選択項目となる
+     * minHour: 選択肢の開始時間
+     * maxHour: 選択肢の最後の時間
+     * */
+    function initTimePicker(selector, myOptions) {
+      let defaultOptions = {
+        step: 30, // ３０分刻み
+        minHour: 0, // AM 0時から
+        maxHour: 23 // PM 11時台まで
+      }
+      const _tp = document.querySelector(selector);
+      if (! _tp) return null;
+      defaultOptions = Object.assign(defaultOptions, myOptions);
+​
+      //
+      let htmlStr = '';
+      hour: for (let h = 0; h < 24; h++) {
+        if (h < defaultOptions.minHour || h > defaultOptions.maxHour) continue hour;
+        minutes: for (let m = 0; m < 59; m += defaultOptions.step) {
+          const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+          htmlStr += `<option value="${timeStr}">${timeStr}</option>`;
+        }
+      }
+      _tp.innerHTML = htmlStr;
+    }
+  </script>
+​
+  <h2>input type=time + datalist</h2>
+  <input class="timepicker2" type="time" list="timePickerList"></div>
+  <datalist id="timePickerList"></datalist>
+​
+  <p>datalistを使うと、プルダウンを出しつつ直接入力も可能だが、CSSでデザインできない。。。</p>
+​
+  <script>
+    const timePicker2 = initTimePicker2('.timepicker2', {
+      step: 5,
+      minHour: 9,
+      maxHour: 18
+    });
+​
+    /**
+     * ◆options
+     * step: ステップ数（default: 5）。設定した分刻みの選択項目となる
+     * minHour: 選択肢の開始時間
+     * maxHour: 選択肢の最後の時間
+     * */
+    function initTimePicker2(selector, myOptions) {
+      let defaultOptions = {
+        step: 30, // ３０分刻み
+        minHour: 0, // AM 0時から
+        maxHour: 23 // PM 11時台まで
+      }
+      const _input = document.querySelector(selector);
+      const _tp = document.querySelector(`#${_input.getAttribute('list')}`);
+      if (! _tp) return null;
+      defaultOptions = Object.assign(defaultOptions, myOptions);
+​
+      //
+      let htmlStr = '';
+      hour: for (let h = 0; h < 24; h++) {
+        if (h < defaultOptions.minHour || h > defaultOptions.maxHour) continue hour;
+        minutes: for (let m = 0; m < 59; m += defaultOptions.step) {
+          const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+          htmlStr += `<option value="${timeStr}">${timeStr}</option>`;
+        }
+      }
+      _tp.innerHTML = htmlStr;
+    }
+  </script>
+​
+​
+  <h2>javascript自作</h2>
+  <p>やっぱりjavascript使って自作するしかない？</p>
+​
 </body>
 </html>
