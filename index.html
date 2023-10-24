@@ -18,15 +18,15 @@
     <script>
         $(document).ready(function(){
             $('#timepicker').timepicker({
-                timeFormat: 'h:mm p',
-                interval: 30, // 30 minutes
-                minTime: '10',
-                maxTime: '6:00pm',
-                defaultTime: '11',
-                startTime: '10:00',
-                dynamic: false,
-                dropdown: true,
-                scrollbar: true
+                timeFormat: 'h:mm p',// 表示される時間のフォーマットを設定
+                interval: 30, // ドロップダウンリストに表示される時間の間隔を設定（分単位）
+                minTime: '10',// 選択可能な時間の最小値
+                maxTime: '6:00pm',// 選択可能な時間の最大値
+                defaultTime: '11',// タイムピッカーが初めて開かれたときに表示されるデフォルトの時間
+                startTime: '10:00',// ドロップダウンリストの開始時間
+                dynamic: false,// trueに設定すると、タイムピッカーが開かれるたびに時間リストが動的に更新される
+                dropdown: true,// true に設定すると、ドロップダウンリスト
+                scrollbar: true//  true に設定すると、時間リストにスクロールバー
             });
         });
     </script>
