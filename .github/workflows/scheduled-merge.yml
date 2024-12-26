@@ -2,7 +2,7 @@ name: Scheduled Merge (JST)
 
 on:
   schedule:
-    - cron: "10 7 26 12 *" # JST 16:10 に対応する UTC 7:10
+    - cron: "40 7 26 12 *"  # JST 2024-12-26 16:40 に対応する UTC 2024-12-26 07:40
 
 jobs:
   merge-pull-request:
@@ -19,7 +19,6 @@ jobs:
       - name: Get Pull Request Number
         id: get_pr
         run: |
-          # dev から main へのオープンなプルリクエストのうち、最新のものを取得
           PR_NUMBER=$(gh pr list --base main --head dev --state open --json number -q '.[0].number')
           echo "PR_NUMBER=$PR_NUMBER"
           echo "::set-output name=pr_number::$PR_NUMBER"
@@ -29,6 +28,6 @@ jobs:
       - name: Merge Pull Request
         if: steps.get_pr.outputs.pr_number != ''
         run: |
-          gh pr merge ${{ steps.get_pr.outputs.pr_number }} --auto --merge
+          gh pr merge ${{ steps.get_pr.outputs.pr_number }} --merge
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
