@@ -5,27 +5,30 @@ on:
     - cron: "10 7 26 12 *" # JST 16:10 に対応する UTC 7:10
 
 jobs:
-  merge-branches:
+  merge-pull-request:
     runs-on: ubuntu-latest
-
     steps:
-      # リポジトリをチェックアウト
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # マージを実行
-      - name: Merge dev into main
+      - name: Install GitHub CLI
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          sudo apt-get update
+          sudo apt-get install -y gh
 
-          # main ブランチをチェックアウト
-          git checkout main
+      - name: Get Pull Request Number
+        id: get_pr
+        run: |
+          # dev から main へのオープンなプルリクエストのうち、最新のものを取得
+          PR_NUMBER=$(gh pr list --base main --head dev --state open --json number -q '.[0].number')
+          echo "PR_NUMBER=$PR_NUMBER"
+          echo "::set-output name=pr_number::$PR_NUMBER"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          # dev ブランチをマージ
-          git merge origin/dev --no-ff -m "Scheduled merge from dev to main"
-
-          # マージをプッシュ
-          git push origin main
+      - name: Merge Pull Request
+        if: steps.get_pr.outputs.pr_number != ''
+        run: |
+          gh pr merge ${{ steps.get_pr.outputs.pr_number }} --auto --merge
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
